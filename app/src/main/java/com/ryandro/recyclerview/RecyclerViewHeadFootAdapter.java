@@ -27,7 +27,7 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE_HEADER;
-        } else if (position == dataArrayList.size() + 1) {
+        } else if (position > dataArrayList.size()) {
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
@@ -62,7 +62,7 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
             FooterViewHolder viewHolder = (FooterViewHolder) holder;
             viewHolder.tv_footer.setText("Hollywood Movie List End Here.");
         } else if (holder instanceof ViewHolder) {
-            MovieDo movieDo = dataArrayList.get(position);
+            MovieDo movieDo = dataArrayList.get(position-1);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.tv_movieName.setText(movieDo.getMovieName());
             viewHolder.tv_director.setText(movieDo.getDirectorName());
@@ -75,7 +75,7 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public int getItemCount() {
         if (dataArrayList != null && dataArrayList.size() > 0)
-            return dataArrayList.size() + 2;
+            return (dataArrayList.size()+2) ;
         return 0;
     }
 

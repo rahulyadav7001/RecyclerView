@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -69,7 +68,6 @@ public class RecyclerViewActivity extends AppCompatActivity {
         movieDo = new MovieDo(R.drawable.spiderman, "Spider-Man: Homecoming", "172", "Jon Watts", "Christopher Nolan\n" +
                 "Emma Thomas", "Dec 25, 2011");
         moviewList.add(movieDo);
-
         return moviewList;
     }
 }

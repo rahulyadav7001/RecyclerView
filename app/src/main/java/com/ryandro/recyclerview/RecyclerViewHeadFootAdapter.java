@@ -17,10 +17,12 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
     private static int TYPE_HEADER = 1;
     private static int TYPE_ITEM = 2;
     private static int TYPE_FOOTER = 3;
+    private ItemClickListnerInterface itemClickListnerInterface;
 
     public RecyclerViewHeadFootAdapter(Context context, ArrayList<MovieDo> dataArrayList) {
         this.dataArrayList = dataArrayList;
         this.context = context;
+        this.itemClickListnerInterface = (ItemClickListnerInterface) context;
     }
 
     @Override
@@ -31,7 +33,6 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
             return TYPE_FOOTER;
         }
         return TYPE_ITEM;
-
     }
 
     @NonNull
@@ -39,6 +40,7 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_ITEM) {
             View view = LayoutInflater.from(context).inflate(R.layout.recyclerview_cell, parent, false);
+//            view.setOnClickListener((View.OnClickListener) itemClickListnerInterface);
             RecyclerViewHeadFootAdapter.ViewHolder viewHolder = new RecyclerViewHeadFootAdapter.ViewHolder(view);
             return viewHolder;
         } else if (viewType == TYPE_HEADER) {
@@ -62,7 +64,7 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
             FooterViewHolder viewHolder = (FooterViewHolder) holder;
             viewHolder.tv_footer.setText("Hollywood Movie List End Here.");
         } else if (holder instanceof ViewHolder) {
-            MovieDo movieDo = dataArrayList.get(position-1);
+            MovieDo movieDo = dataArrayList.get(position - 1);
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.tv_movieName.setText(movieDo.getMovieName());
             viewHolder.tv_director.setText(movieDo.getDirectorName());
@@ -75,11 +77,11 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public int getItemCount() {
         if (dataArrayList != null && dataArrayList.size() > 0)
-            return (dataArrayList.size()+2) ;
+            return (dataArrayList.size() + 2);
         return 0;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements ItemClickListnerInterface {
         private TextView tv_movieName, tv_director, tv_writter, tv_releaseDate;
         private ImageView iv_movie;
 
@@ -90,6 +92,14 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
             tv_writter = itemView.findViewById(R.id.tv_writter);
             tv_releaseDate = itemView.findViewById(R.id.tv_releaseDate);
             iv_movie = itemView.findViewById(R.id.iv_movie);
+        }
+
+        @Override
+        public void onclick(int position) {
+            if (itemClickListnerInterface != null) {
+                itemClickListnerInterface.onclick(getAdapterPosition());
+            }
+
         }
     }
 
@@ -110,4 +120,9 @@ public class RecyclerViewHeadFootAdapter extends RecyclerView.Adapter<RecyclerVi
             tv_header = itemView.findViewById(R.id.tv_header);
         }
     }
+
+    public interface ItemClickListnerInterface {
+        void onclick(int position);
+    }
 }
+

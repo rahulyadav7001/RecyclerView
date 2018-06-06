@@ -1,6 +1,8 @@
 package com.ryandro.recyclerview;
 
-public class MovieDo {
+import java.io.Serializable;
+
+public class MovieDo implements Serializable {
     private int movieImage;
     private String movieName = "";
     private String movieRunTime = "";
@@ -15,6 +17,10 @@ public class MovieDo {
         this.directorName = directorName;
         this.writerName = writerName;
         ReleaseDate = releaseDate;
+    }
+
+    public MovieDo() {
+
     }
 
     public int getMovieImage() {
